@@ -1,9 +1,23 @@
+enum ProficiencyLevel {
+    RECREATIONAL
+    MIDDLE_SCHOOL_C_TEAM
+    MIDDLE_SCHOOL_JV
+    MIDDLE_SCHOOL_VARSITY
+    HIGH_SCHOOL_C_TEAM
+    HIGH_SCHOOL_JV
+    HIGH_SCHOOL_VARSITY
+}
+
+
 type User {
     id: ID!
-    name: String!
+    firstName: String!
+    lastName: String!
     email: String!
     address: Address
     picture: String
+    maxTravelDistance: Int!
+    proficiency: ProficiencyLevel!
 }
 
 
