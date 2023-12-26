@@ -9,6 +9,12 @@ enum ProficiencyLevel {
 }
 
 
+type DayAvailability {
+    day: String!
+    available: Boolean!
+}
+
+
 type User {
     id: ID!
     firstName: String!
@@ -18,6 +24,8 @@ type User {
     picture: String
     maxTravelDistance: Int!
     proficiency: ProficiencyLevel!
+    availability: [DayAvailability]
+    games: [Game]
 }
 
 
@@ -26,4 +34,26 @@ type Address {
     city: String!
     state: String!
     postalCode: String!
+}
+
+
+type Game {
+    id: ID!
+    location: Location
+    referees: [User]
+    time: String!
+}
+
+
+type Location {
+    id: ID!
+    name: String!
+    games: [Game]
+}
+
+
+type Query {
+    users: [User]
+    games: [Game]
+    locations: [Location]
 }
