@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { ProficiencyLevel } from './proficiency-level';
 
 interface IUser extends Document {
   firstName: string;
@@ -7,7 +8,7 @@ interface IUser extends Document {
   address: Schema.Types.ObjectId;
   picture: string;
   maxTravelDistance: number;
-  proficiency: { type: Schema.Types.ObjectId, ref: 'ProficiencyLevel' };
+  proficiency: ProficiencyLevel;
   availability: string[];
   games: Schema.Types.ObjectId[];
 }
@@ -19,7 +20,7 @@ const userSchema: Schema = new mongoose.Schema({
   address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
   picture: String,
   maxTravelDistance: Number,
-  proficiency: { type: mongoose.Schema.Types.ObjectId, ref: 'ProficiencyLevel' },
+  proficiency: { type: String, enum: Object.values(ProficiencyLevel)},
   availability: [String],
   games: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }],
 });
