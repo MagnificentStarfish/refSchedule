@@ -1,3 +1,5 @@
+import Game from './game.ts';
+
 const gameResolvers = {
   Query: {
     games: async () => {

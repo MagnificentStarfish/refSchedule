@@ -1,3 +1,5 @@
+import User from './user';
+
 const userResolvers = {
   Query: {
     users: async () => {
