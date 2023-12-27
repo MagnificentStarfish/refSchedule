@@ -17,3 +17,19 @@
 10. Authentication: Back in your backend directory, install Passport.js by running npm install passport. Implement authentication in your Express.js server.
 
 11. Connect frontend and backend: In your React application, use Apollo Client to send authenticated requests to your GraphQL API.
+
+
+
+Thank you for providing the context. Here's a summary of your project:
+
+You're working on a basketball game scheduling application. The application is responsible for scheduling referees for basketball games. The scheduling is based on several factors:
+
+Proximity to the location: The application considers the distance between the referee's location and the game location. The maxTravelDistance property in the User model likely represents the maximum distance a referee is willing to travel for a game.
+
+Skill level: The application also considers the referee's skill level when scheduling games. The proficiency property in the User model likely represents this.
+
+Availability: The application checks the referee's availability to ensure they are free to referee the game. The availability property in the User model likely represents this.
+
+The application is built with TypeScript and uses Mongoose for MongoDB object modeling. The User.ts file you've shared defines a User model, which represents a referee in the application. The model includes properties for the referee's first name, last name, email, address, profile picture, maximum travel distance, proficiency level, availability, and the games they are assigned to.
+
+In future sessions, you can refer to this summary to provide context about your project.
