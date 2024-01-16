@@ -1,3 +1,5 @@
+ts-node graphqlServer.ts
+
 1. Set up your project: You've already created your refSchedule directory with frontend and backend subdirectories.
 
 2. Backend setup: Navigate to the backend directory. Initialize a new Node.js project by running npm init -y (or npm init for manual setup). Install Express.js and GraphQL libraries by running npm install express express-graphql graphql.
