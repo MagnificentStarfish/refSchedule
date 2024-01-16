@@ -1,5 +1,6 @@
-import { ApolloServer, gql } from 'apollo-server';
-import User from './user'
+const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+const User = require('./user');
 
 
 const typeDefs = gql`
@@ -25,6 +26,6 @@ const resolvers = {
 // Starts the server
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen().then(({ url }) => {
+server.listen().then(({ url }: { url: string }) => {
   console.log(`Server ready at ${url}`);
 });
