@@ -5,6 +5,7 @@ import { DayOfWeek } from './day-availability';
 interface IUser extends Document {
   firstName: string;
   lastName: string;
+  phoneNumber: string;
   email: string;
   address: Schema.Types.ObjectId;
   picture: string;

@@ -2,12 +2,14 @@ const { ApolloServer, gql } = require('apollo-server');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const User = require('./user');
 const LocationModel = require('./location');
+const AddressModel = require('./address');
 
 
 const typeDefs = gql`
   type User {
     firstName: String
     lastName: String
+    phoneNumber: String
     email: String
     address: Address
     picture: String
@@ -19,6 +21,10 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
+    usersBylastName(lastName: String!): [User]
+    usersByPhoneNumber(phoneNumber: String!): [User]
+    Locations: [Location]
+    LocationByName(name: String!): Location
   }
 
   type Address {
@@ -38,23 +44,63 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     users: async () => {
-      return await User.find();
+      try {
+        return await User.find().populate('address').populate('games');
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch users');
+      }
     },
+
+    usersByLastName: async (_: any, args: { lastName: string; }) => {
+      try {
+        return await User.find({ lastName: args.lastName });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch user(s) by last name');
+      }
+    },
+
+    usersByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
+      try {
+        return await User.find({ phoneNumber: args.phoneNumber });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch user(s) by phone number');
+      }
+    },
+
     locations: async () => {
-      return await LocationModel.find();
+      try {
+        return await LocationModel.find();
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch locations');
+      }
+  }
+},
+User: {
+  address: async (parent: any) => {
+    try {
+      return parent.address;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to fetch address for user');
     }
   },
-  User: {
-    address: async (parent: any) => {
-      return await parent.populate('address').execPopulate();
-    },
-    games: async (parent: any) => {
-      return await parent.populate('games').execPopulate();
-    },
+
+  games: async (parent: any) => {
+    try {
+      return parent.games;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to fetch games for user');
+    }
   },
+},
 };
 
-// Starts the server
+
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen().then(({ url }: { url: string }) => {
