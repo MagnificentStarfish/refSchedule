@@ -8,16 +8,25 @@ const GameModel = require('./game');
 
 const typeDefs = gql`
   type User {
-    firstName: String
-    lastName: String
-    phoneNumber: String
-    email: String
+    firstName: String!
+    lastName: String!
+    phoneNumber: String!
+    email: String!
     address: Address
     picture: String
     maxTravelDistance: Int
-    proficiency: String
+    proficiency: String!
     availability: [Availability]
     games: [Game]
+  }
+
+  type Game {
+    id: ID!
+    location: Location!
+    referees: [User]
+    date: String!
+    time: String!
+    proficiencyLevel: String!
   }
 
   type Availability {
@@ -36,18 +45,22 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
+    allUsers: [User]
     usersBylastName(lastName: String!): [User]
     usersByPhoneNumber(phoneNumber: String!): [User]
-    locations: [Location]
+    allLocations: [Location]
     locationByName(name: String!): Location
+    allGames: [Game]
+    gamesByLocation(location: String!): [Game]
+    gamesByReferee(referee: String!): [Game]
+    gameById(id: ID!): Game
   }
 
   type Address {
-    street: String
-    city: String
-    state: String
-    zip: String
+    street: String!
+    city: String!
+    state: String!
+    zip: String!
   }
 
   type Location {
@@ -59,7 +72,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    users: async () => {
+    allUsers: async () => {
       try {
         return await User.find().populate('address').populate('games');
     } catch (error) {
@@ -86,7 +99,7 @@ const resolvers = {
       }
     },
 
-    locations: async () => {
+    allLocations: async () => {
       try {
         return await LocationModel.find().populate('address');
     } catch (error) {
@@ -104,8 +117,44 @@ const resolvers = {
           console.error(error);
           throw new Error('Failed to fetch location by name');
       }
+      },
 
+      allGames: async () => {
+      try {
+        return await GameModel.find({});
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch all games');
+      }
+    },
+
+    gameById: async (_: any, { id }: {id: string}) => {
+  try {
+    return await GameModel.findById(id);
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch game with id ${id}`);
+  }
 },
+
+    gamesByLocation: async (_: any, args: { location: string; }) => {
+      try {
+        return await GameModel.find({ location: args.location });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch games by location');
+      }
+    },
+
+    gamesByReferee: async (_: any, args: { referee: string; }) => {
+      try {
+        return await GameModel.find({ referee: args.referee });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch games by referee');
+      }
+    },
+
 User: {
   address: async (parent: any) => {
     try {
