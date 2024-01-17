@@ -3,6 +3,7 @@ const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const User = require('./user');
 const LocationModel = require('./location');
 const AddressModel = require('./address');
+const GameModel = require('./game');
 
 
 const typeDefs = gql`
@@ -17,6 +18,21 @@ const typeDefs = gql`
     proficiency: String
     availability: [Availability]
     games: [Game]
+  }
+
+  type Availability {
+    dayOfWeek: String
+    isAvailable: Boolean
+  }
+
+  enum DayOfWeek {
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+    Sunday
   }
 
   type Query {
