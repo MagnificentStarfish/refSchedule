@@ -1,6 +1,15 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { ProficiencyLevel } from './proficiency-level';
-import { DayOfWeek } from './day-availability';
+
+export enum DayOfWeek {
+  Monday = 'Monday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
+  Thursday = 'Thursday',
+  Friday = 'Friday',
+  Saturday = 'Saturday',
+  Sunday = 'Sunday',
+}
 
 interface IUser extends Document {
   firstName: string;

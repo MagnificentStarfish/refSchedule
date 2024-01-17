@@ -23,8 +23,8 @@ const typeDefs = gql`
     users: [User]
     usersBylastName(lastName: String!): [User]
     usersByPhoneNumber(phoneNumber: String!): [User]
-    Locations: [Location]
-    LocationByName(name: String!): Location
+    locations: [Location]
+    locationByName(name: String!): Location
   }
 
   type Address {
@@ -72,12 +72,23 @@ const resolvers = {
 
     locations: async () => {
       try {
-        return await LocationModel.find();
+        return await LocationModel.find().populate('address');
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch locations');
       }
-  }
+  },
+
+    locationByName: async (_: any, args: { name: string; }) => {
+      try {
+        return await LocationModel.find({
+          name: { $regex: new RegExp(args.name, 'i') }
+        }).populate('address');
+        } catch (error) {
+          console.error(error);
+          throw new Error('Failed to fetch location by name');
+      }
+
 },
 User: {
   address: async (parent: any) => {
@@ -97,6 +108,7 @@ User: {
       throw new Error('Failed to fetch games for user');
     }
   },
+},
 },
 };
 
