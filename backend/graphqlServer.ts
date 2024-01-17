@@ -158,7 +158,7 @@ const resolvers = {
 User: {
   address: async (parent: any) => {
     try {
-      return parent.address;
+      return await AddressModel.findById(parent.address);
     } catch (error) {
       console.error(error);
       throw new Error('Failed to fetch address for user');
@@ -167,10 +167,20 @@ User: {
 
   games: async (parent: any) => {
     try {
-      return parent.games;
+      return await GameModel.find({ _id: { $in: parent.games } });
     } catch (error) {
       console.error(error);
       throw new Error('Failed to fetch games for user');
+    }
+  },
+},
+Game: {
+  location: async (parent: any) => {
+    try {
+      return await LocationModel.findById(parent.location);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to fetch location for game');
     }
   },
 },

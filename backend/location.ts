@@ -6,11 +6,13 @@ interface ILocation extends Document {
   address: typeof Address.schema;
 }
 
+interface ILocationModel extends mongoose.Model<ILocation> {}
+
 const locationSchema: Schema = new mongoose.Schema({
   name: { type: String, required: true },
   address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true },
 });
 
-const Location = mongoose.model<ILocation>('Location', locationSchema);
+const Location: ILocationModel = mongoose.model<ILocation>('Location', locationSchema);
 
 export default Location;
