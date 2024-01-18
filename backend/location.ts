@@ -1,16 +1,21 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import Address from './address';
+import { IAddress } from './user';
 
 interface ILocation extends Document {
   name: string;
-  address: typeof Address.schema;
+  address: IAddress;
 }
 
 interface ILocationModel extends mongoose.Model<ILocation> {}
 
 const locationSchema: Schema = new mongoose.Schema({
   name: { type: String, required: true },
-  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true },
+  address: {
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zip: { type: String, required: true },
+  },
 });
 
 const Location: ILocationModel = mongoose.model<ILocation>('Location', locationSchema);

@@ -11,7 +11,7 @@ export enum DayOfWeek {
   Sunday = 'Sunday',
 }
 
-interface IAddress {
+export interface IAddress {
   street: string;
   city: string;
   state: string;
@@ -40,10 +40,10 @@ const userSchema: Schema = new mongoose.Schema({
   phoneNumber: String,
   email: String,
   address: {
-    street: String,
-    city: String,
-    state: String,
-    zip: String,
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zip: { type: String, required: true },
   },
   picture: String,
   maxTravelDistance: Number,

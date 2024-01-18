@@ -79,22 +79,29 @@ const typeDefs = gql`
     address: Address
   }
 
+  input AddressInput {
+  street: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
 type Mutation {
-  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!,
+  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!, address: AddressInput!,
     picture: String, maxTravelDistance: Int!, proficiency: String!, availability: [AvailabilityInput]): User!
-  updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
+  updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String, address: AddressInput,
     picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User
   deleteUser(id: ID!): User
 }
+
+
 `;
-
-
 
 const resolvers = {
   Query: {
     allUsers: async () => {
       try {
-        return await UserModel.find().populate('address').populate('games');
+        return await UserModel.find().populate('games');
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch users');
@@ -185,6 +192,7 @@ Mutation: {
       phoneNumber,
       email,
       picture,
+      address,
       maxTravelDistance,
       proficiency,
       availability,
@@ -194,16 +202,43 @@ Mutation: {
       phoneNumber: string;
       email: string;
       picture?: string;
+      address: {
+        street: string;
+        city: string;
+        state: string;
+        zip: string;
+      };
       maxTravelDistance: number;
       proficiency: string;
       availability: string[];
     }
   ) => {
     try {
-      const user = new UserModel({ firstName, lastName, phoneNumber, email, picture,
-        maxTravelDistance, proficiency, availability });
+      console.log('Creating user...');
+      console.log('Input data:', {
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        picture,
+        address,
+        maxTravelDistance,
+        proficiency,
+        availability,
+      });
+      const user = new UserModel({
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        picture,
+        address,
+        maxTravelDistance,
+        proficiency,
+        availability,
+      });
 
-console.log(user);
+      console.log('User model:', user);
 
       return await user.save();
     } catch (error) {
@@ -211,26 +246,6 @@ console.log(user);
       throw new Error('Failed to create user');
     }
   },
-},
-
-User: {
-  address: async (parent: any) => {
-    try {
-      return await AddressModel.findById(parent.address);
-    } catch (error) {
-      console.error(error);
-      throw new Error('Failed to fetch address for user');
-    }
-  },
-
-  // games: async (parent: any) => {
-  //   try {
-  //     return await GameModel.find({ _id: { $in: parent.games } });
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw new Error('Failed to fetch games for user');
-  //   }
-  // },
 },
 Game: {
   location: async (parent: any) => {
@@ -243,7 +258,6 @@ Game: {
   },
 },
 };
-
 
 
 const server = new ApolloServer({ typeDefs, resolvers });
