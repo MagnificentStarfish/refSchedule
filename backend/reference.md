@@ -1,4 +1,6 @@
-ts-node graphqlServer.ts
+ts-node graphqlServer.ts (server)
+ts-node server.ts (database)
+
 
 1. Set up your project: You've already created your refSchedule directory with frontend and backend subdirectories.
 

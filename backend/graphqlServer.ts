@@ -1,9 +1,16 @@
-const { ApolloServer, gql } = require('apollo-server');
-const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
-const UserModel = require('./user');
-const LocationModel = require('./location');
-const AddressModel = require('./address');
-const GameModel = require('./game');
+// const { ApolloServer, gql } = require('apollo-server');
+// const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+// const UserModel = require('./user');
+// const LocationModel = require('./location');
+// const AddressModel = require('./address');
+// const GameModel = require('./game');
+
+import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import UserModel from './user';
+import LocationModel from './location';
+import AddressModel from './address';
+import GameModel from './game';
 
 
 const typeDefs = gql`
@@ -50,7 +57,7 @@ const typeDefs = gql`
 
   type Query {
     allUsers: [User]
-    usersBylastName(lastName: String!): [User]
+    usersByLastName(lastName: String!): [User]
     usersByPhoneNumber(phoneNumber: String!): [User]
     allLocations: [Location]
     locationByName(name: String!): Location
@@ -167,6 +174,7 @@ const resolvers = {
         throw new Error('Failed to fetch games by referee');
       }
     },
+  },
 
 Mutation: {
   createUser: async (
@@ -194,6 +202,9 @@ Mutation: {
     try {
       const user = new UserModel({ firstName, lastName, phoneNumber, email, picture,
         maxTravelDistance, proficiency, availability });
+
+console.log(user);
+
       return await user.save();
     } catch (error) {
       console.error(error);
@@ -212,14 +223,14 @@ User: {
     }
   },
 
-  games: async (parent: any) => {
-    try {
-      return await GameModel.find({ _id: { $in: parent.games } });
-    } catch (error) {
-      console.error(error);
-      throw new Error('Failed to fetch games for user');
-    }
-  },
+  // games: async (parent: any) => {
+  //   try {
+  //     return await GameModel.find({ _id: { $in: parent.games } });
+  //   } catch (error) {
+  //     console.error(error);
+  //     throw new Error('Failed to fetch games for user');
+  //   }
+  // },
 },
 Game: {
   location: async (parent: any) => {
@@ -231,8 +242,8 @@ Game: {
     }
   },
 },
-},
 };
+
 
 
 const server = new ApolloServer({ typeDefs, resolvers });
