@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
-const User = require('./user');
+const UserModel = require('./user');
 const LocationModel = require('./location');
 const AddressModel = require('./address');
 const GameModel = require('./game');
@@ -67,6 +67,13 @@ const typeDefs = gql`
     name: String
     address: Address
   }
+
+  type Mutation {
+    createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!,
+      picture: String, maxTravelDistance: Int!, proficiency: String!, availability: [AvailabilityInput], games: [ID]): User
+    updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
+      picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput], games: [ID]): User
+    deleteUser(id: ID!): User
 `;
 
 
@@ -74,7 +81,7 @@ const resolvers = {
   Query: {
     allUsers: async () => {
       try {
-        return await User.find().populate('address').populate('games');
+        return await UserModel.find().populate('address').populate('games');
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch users');
@@ -83,7 +90,7 @@ const resolvers = {
 
     usersByLastName: async (_: any, args: { lastName: string; }) => {
       try {
-        return await User.find({ lastName: args.lastName });
+        return await UserModel.find({ lastName: args.lastName });
       } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch user(s) by last name');
@@ -92,7 +99,7 @@ const resolvers = {
 
     usersByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
       try {
-        return await User.find({ phoneNumber: args.phoneNumber });
+        return await UserModel.find({ phoneNumber: args.phoneNumber });
       } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch user(s) by phone number');
