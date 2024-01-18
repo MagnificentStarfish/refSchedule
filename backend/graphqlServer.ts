@@ -15,9 +15,8 @@ const typeDefs = gql`
     address: Address
     picture: String
     maxTravelDistance: Int
-    proficiency: String!
+    proficiency: String
     availability: [Availability]
-    games: [Game]
   }
 
   type Game {
@@ -30,9 +29,14 @@ const typeDefs = gql`
   }
 
   type Availability {
-    dayOfWeek: String
+    dayOfWeek: DayOfWeek!
     isAvailable: Boolean
   }
+
+  input AvailabilityInput {
+  dayOfWeek: DayOfWeek!
+  isAvailable: Boolean
+}
 
   enum DayOfWeek {
     Monday
@@ -68,13 +72,15 @@ const typeDefs = gql`
     address: Address
   }
 
-  type Mutation {
-    createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!,
-      picture: String, maxTravelDistance: Int!, proficiency: String!, availability: [AvailabilityInput], games: [ID]): User
-    updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
-      picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput], games: [ID]): User
-    deleteUser(id: ID!): User
+type Mutation {
+  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!,
+    picture: String, maxTravelDistance: Int!, proficiency: String!, availability: [AvailabilityInput]): User!
+  updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
+    picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User
+  deleteUser(id: ID!): User
+}
 `;
+
 
 
 const resolvers = {
@@ -161,6 +167,40 @@ const resolvers = {
         throw new Error('Failed to fetch games by referee');
       }
     },
+
+Mutation: {
+  createUser: async (
+    _: any,
+    {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      picture,
+      maxTravelDistance,
+      proficiency,
+      availability,
+    }: {
+      firstName: string;
+      lastName: string;
+      phoneNumber: string;
+      email: string;
+      picture?: string;
+      maxTravelDistance: number;
+      proficiency: string;
+      availability: string[];
+    }
+  ) => {
+    try {
+      const user = new UserModel({ firstName, lastName, phoneNumber, email, picture,
+        maxTravelDistance, proficiency, availability });
+      return await user.save();
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to create user');
+    }
+  },
+},
 
 User: {
   address: async (parent: any) => {
