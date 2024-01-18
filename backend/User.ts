@@ -11,12 +11,19 @@ export enum DayOfWeek {
   Sunday = 'Sunday',
 }
 
+interface IAddress {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
 interface IUser extends Document {
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
-  address: Schema.Types.ObjectId;
+  address: IAddress;
   picture: string;
   maxTravelDistance: number;
   proficiency: ProficiencyLevel;
@@ -30,8 +37,14 @@ interface IUser extends Document {
 const userSchema: Schema = new mongoose.Schema({
   firstName: String,
   lastName: String,
+  phoneNumber: String,
   email: String,
-  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    zip: String,
+  },
   picture: String,
   maxTravelDistance: Number,
   proficiency: { type: String, enum: Object.values(ProficiencyLevel)},
