@@ -1,6 +1,6 @@
+"use strict";
 // import { IResolvers } from '@graphql-tools/utils';
 // import Game from './game';
-
 // const Query: IResolvers = {
 //   games: async () => {
 //     return await Game.find({});
@@ -9,5 +9,4 @@
 //     return await Game.findById(id);
 //   },
 // };
-
 // export default Query;

@@ -20,7 +20,7 @@ type User {
     firstName: String!
     lastName: String!
     email: String!
-    address: Address
+    # address: Address
     picture: String
     maxTravelDistance: Int!
     proficiency: ProficiencyLevel!
@@ -29,31 +29,31 @@ type User {
 }
 
 
-type Address {
-    street: String!
-    city: String!
-    state: String!
-    postalCode: String!
-}
+# type Address {
+#     street: String!
+#     city: String!
+#     state: String!
+#     postalCode: String!
+# }
 
 
-type Game {
-    id: ID!
-    location: Location
-    referees: [User]
-    time: String!
-}
+# type Game {
+#     id: ID!
+#     location: Location
+#     referees: [User]
+#     time: String!
+# }
 
 
-type Location {
-    id: ID!
-    name: String!
-    games: [Game]
-}
+# type Location {
+#     id: ID!
+#     name: String!
+#     games: [Game]
+# }
 
 
-type Query {
-    users: [User]
-    games: [Game]
-    locations: [Location]
-}
+# type Query {
+#     users: [User]
+#     games: [Game]
+#     locations: [Location]
+# }

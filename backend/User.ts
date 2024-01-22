@@ -11,19 +11,19 @@ export enum DayOfWeek {
   Sunday = 'Sunday',
 }
 
-export interface IAddress {
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-}
+// export interface IAddress {
+//   street: string;
+//   city: string;
+//   state: string;
+//   zip: string;
+// }
 
 interface IUser extends Document {
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
-  address: IAddress;
+  // address: IAddress;
   picture: string;
   maxTravelDistance: number;
   proficiency: ProficiencyLevel;
@@ -31,7 +31,7 @@ interface IUser extends Document {
     dayOfWeek: DayOfWeek;
     isAvailable: boolean;
   }];
-  games: Schema.Types.ObjectId[];
+  // games: Schema.Types.ObjectId[];
 }
 
 const userSchema: Schema = new mongoose.Schema({
@@ -39,12 +39,12 @@ const userSchema: Schema = new mongoose.Schema({
   lastName: String,
   phoneNumber: String,
   email: String,
-  address: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zip: { type: String, required: true },
-  },
+  // address: {
+  //   street: { type: String, required: true },
+  //   city: { type: String, required: true },
+  //   state: { type: String, required: true },
+  //   zip: { type: String, required: true },
+  // },
   picture: String,
   maxTravelDistance: Number,
   proficiency: { type: String, enum: Object.values(ProficiencyLevel)},
@@ -52,7 +52,7 @@ const userSchema: Schema = new mongoose.Schema({
     dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: true },
     isAvailable: { type: Boolean, default: false },
   }],
-  games: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }],
+  // games: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }],
 });
 
 const User = mongoose.model<IUser>('User', userSchema);

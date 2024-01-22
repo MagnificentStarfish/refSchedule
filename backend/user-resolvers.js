@@ -1,5 +1,5 @@
+"use strict";
 // import User from './user';
-
 // const userResolvers = {
 //   Query: {
 //     users: async () => {
@@ -7,5 +7,4 @@
 //     },
 //   },
 // };
-
 // module.exports = userResolvers;

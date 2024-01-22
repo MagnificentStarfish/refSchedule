@@ -1,8 +1,9 @@
-"use strict";
-var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
-    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-    return cooked;
-};
+// const { ApolloServer, gql } = require('apollo-server');
+// const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+// const UserModel = require('./user');
+// const LocationModel = require('./location');
+// const AddressModel = require('./address');
+// const GameModel = require('./game');
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,53 +13,241 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var apollo_server_1 = require("apollo-server");
-var user_1 = require("./user");
-var typeDefs = (0, apollo_server_1.gql)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  type User {\n    firstName: String\n    lastName: String\n  }\n\n  type Query {\n    users: [User]\n  }\n"], ["\n  type User {\n    firstName: String\n    lastName: String\n  }\n\n  type Query {\n    users: [User]\n  }\n"])));
-var resolvers = {
+import { ApolloServer, gql } from 'apollo-server';
+// import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import UserModel from './user';
+// import LocationModel from './location';
+// import AddressModel from './address';
+// import GameModel from './game';
+const typeDefs = gql `
+  type User {
+    firstName: String!
+    lastName: String!
+    phoneNumber: String!
+    email: String!
+    # address: Address
+    picture: String
+    maxTravelDistance: Int
+    proficiency: String
+    availability: [Availability]
+  }
+
+  # type Game {
+  #   id: ID!
+  #   location: Location!
+  #   referees: [User]
+  #   date: String!
+  #   time: String!
+  #   proficiencyLevel: String!
+  # }
+
+  type Availability {
+    dayOfWeek: DayOfWeek!
+    isAvailable: Boolean
+  }
+
+  input AvailabilityInput {
+  dayOfWeek: DayOfWeek!
+  isAvailable: Boolean
+}
+
+  enum DayOfWeek {
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+    Sunday
+  }
+
+  type Query {
+    allUsers: [User]
+    # usersByLastName(lastName: String!): [User]
+    # usersByPhoneNumber(phoneNumber: String!): [User]
+    # allLocations: [Location]
+    # locationByName(name: String!): Location
+    # allGames: [Game]
+    # gamesByLocation(location: String!): [Game]
+    # gamesByReferee(referee: String!): [Game]
+    # gameById(id: ID!): Game
+  }
+
+  # type Address {
+  #   street: String!
+  #   city: String!
+  #   state: String!
+  #   zip: String!
+  # }
+
+  # type Location {
+  #   name: String
+  #   address: Address
+  # }
+
+#   input AddressInput {
+#   street: String!
+#   city: String!
+#   state: String!
+#   zip: String!
+# }
+
+type Mutation {
+  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!,
+    picture: String, maxTravelDistance: Int!, proficiency: String!, availability: [AvailabilityInput]): User!
+  updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
+    picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User
+  deleteUser(id: ID!): User
+}
+
+
+`;
+const resolvers = {
     Query: {
-        users: function () { return __awaiter(void 0, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, user_1.default.find()];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        }); },
+        allUsers: () => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                return yield UserModel.find().populate('games');
+            }
+            catch (error) {
+                console.error(error);
+                throw new Error('Failed to fetch users');
+            }
+        }),
+        // usersByLastName: async (_: any, args: { lastName: string; }) => {
+        //   try {
+        //     return await UserModel.find({ lastName: args.lastName });
+        //   } catch (error) {
+        //     console.error(error);
+        //     throw new Error('Failed to fetch user(s) by last name');
+        //   }
+        // },
+        // usersByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
+        //   try {
+        //     return await UserModel.find({ phoneNumber: args.phoneNumber });
+        //   } catch (error) {
+        //     console.error(error);
+        //     throw new Error('Failed to fetch user(s) by phone number');
+        //   }
+        // },
+        //   allLocations: async () => {
+        //     try {
+        //       return await LocationModel.find().populate('address');
+        //   } catch (error) {
+        //       console.error(error);
+        //       throw new Error('Failed to fetch locations');
+        //     }
+        // },
+        // locationByName: async (_: any, args: { name: string; }) => {
+        //   try {
+        //     return await LocationModel.find({
+        //       name: { $regex: new RegExp(args.name, 'i') }
+        //     }).populate('address');
+        //     } catch (error) {
+        //       console.error(error);
+        //       throw new Error('Failed to fetch location by name');
+        //   }
+        //   },
+        //       allGames: async () => {
+        //       try {
+        //         return await GameModel.find({});
+        //       } catch (error) {
+        //         console.error(error);
+        //         throw new Error('Failed to fetch all games');
+        //       }
+        //     },
+        //     gameById: async (_: any, { id }: {id: string}) => {
+        //   try {
+        //     return await GameModel.findById(id);
+        //   } catch (error) {
+        //     console.error(error);
+        //     throw new Error(`Failed to fetch game with id ${id}`);
+        //   }
+        // },
+        //     gamesByLocation: async (_: any, args: { location: string; }) => {
+        //       try {
+        //         return await GameModel.find({ location: args.location });
+        //       } catch (error) {
+        //         console.error(error);
+        //         throw new Error('Failed to fetch games by location');
+        //       }
+        //     },
+        //     gamesByReferee: async (_: any, args: { referee: string; }) => {
+        //       try {
+        //         return await GameModel.find({ referee: args.referee });
+        //       } catch (error) {
+        //         console.error(error);
+        //         throw new Error('Failed to fetch games by referee');
+        //       }
+        //     },
     },
+    Mutation: {
+        createUser: (_, { firstName, lastName, phoneNumber, email, picture, 
+        // address,
+        maxTravelDistance, proficiency, availability, }) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                console.log('Creating user...');
+                console.log('Input data:', {
+                    firstName,
+                    lastName,
+                    phoneNumber,
+                    email,
+                    picture,
+                    // address,
+                    maxTravelDistance,
+                    proficiency,
+                    availability,
+                });
+                // console.log('HERE IS THE ADDRESS', address);
+                // console.log('HERE IS THE ADDRESS', address);
+                // console.log('HERE IS THE ADDRESS', address);
+                const user = new UserModel({
+                    firstName,
+                    lastName,
+                    phoneNumber,
+                    email,
+                    picture,
+                    // address: {
+                    //   street: address.street,
+                    //   city: address.city,
+                    //   state: address.state,
+                    //   zip: address.zip,
+                    // },
+                    maxTravelDistance,
+                    proficiency,
+                    availability,
+                });
+                console.log('User model:', user);
+                // console.log('User model:', user);
+                // console.log('User model:', user);
+                // console.log('User model address:', user.address);
+                // console.log('User model address:', user.address);
+                // console.log('User model address:', user.address);
+                const result = yield user.save();
+                console.log('Result of save operation:', result);
+                return result;
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    console.error('Error name:', error.name);
+                    console.error('Error message:', error.message);
+                }
+                console.error('Error object:', error);
+                throw new Error('Failed to create user');
+            }
+        }),
+    },
+    // Game: {
+    //   location: async (parent: any) => {
+    //     try {
+    //       return await LocationModel.findById(parent.location);
+    //     } catch (error) {
+    //       console.error(error);
+    //       throw new Error('Failed to fetch location for game');
+    //     }
+    //   },
+    // },
 };
-// Starts the server
-var server = new apollo_server_1.ApolloServer({ typeDefs: typeDefs, resolvers: resolvers });
-server.listen().then(function (_a) {
-    var url = _a.url;
-    console.log("Server ready at ".concat(url));
+const server = new ApolloServer({ typeDefs, resolvers });
+server.listen().then(({ url }) => {
+    console.log(`Server ready at ${url}`);
 });
-var templateObject_1;

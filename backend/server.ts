@@ -1,21 +1,29 @@
 import mongoose from 'mongoose';
 
-mongoose.connect('mongodb://localhost:27017/refSchedule', {
-  serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((error) => {
-  console.error('Failed to connect to MongoDB', error);
-});
+async function connectToDatabase() {
+  try {
+    await mongoose.connect('mongodb://localhost:27017/refSchedule', {
+      serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+    });
 
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose connected to MongoDB');
-});
+    console.log('Connected to MongoDB');
 
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected from MongoDB');
-});
+    mongoose.connection.on('connected', () => {
+      console.log('Mongoose reconnected to MongoDB');
+    });
 
-mongoose.connection.on('error', (error) => {
-  console.error('Mongoose encountered an error', error);
-});
+    mongoose.connection.on('disconnected', () => {
+      console.log('Mongoose disconnected from MongoDB');
+    });
+
+    mongoose.connection.on('error', (error) => {
+      console.error('Mongoose encountered an error', error);
+    });
+
+    mongoose.set('debug', true);
+  } catch (error) {
+    console.error('Failed to connect to MongoDB', error);
+  }
+}
+
+connectToDatabase();

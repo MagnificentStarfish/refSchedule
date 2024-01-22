@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DayOfWeek = void 0;
-var mongoose_1 = require("mongoose");
-var proficiency_level_1 = require("./proficiency-level");
-var DayOfWeek;
+import mongoose from 'mongoose';
+// import { ProficiencyLevel } from './proficiency-level';
+
+export var DayOfWeek;
 (function (DayOfWeek) {
     DayOfWeek["Monday"] = "Monday";
     DayOfWeek["Tuesday"] = "Tuesday";
@@ -12,20 +10,58 @@ var DayOfWeek;
     DayOfWeek["Friday"] = "Friday";
     DayOfWeek["Saturday"] = "Saturday";
     DayOfWeek["Sunday"] = "Sunday";
-})(DayOfWeek || (exports.DayOfWeek = DayOfWeek = {}));
-var userSchema = new mongoose_1.default.Schema({
+})(DayOfWeek || (DayOfWeek = {}));
+
+const userSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
+    phoneNumber: String,
     email: String,
-    address: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Address' },
     picture: String,
     maxTravelDistance: Number,
-    proficiency: { type: String, enum: Object.values(proficiency_level_1.ProficiencyLevel) },
+    // proficiency: { type: String, enum: Object.values(ProficiencyLevel) },
     availability: [{
             dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: true },
             isAvailable: { type: Boolean, default: false },
         }],
-    games: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Game' }],
 });
-var User = mongoose_1.default.model('User', userSchema);
-exports.default = User;
+
+const User = mongoose.model('User', userSchema);
+export default User;
+
+
+
+// import mongoose from 'mongoose';
+// import { ProficiencyLevel } from './proficiency-level';
+// export var DayOfWeek;
+// (function (DayOfWeek) {
+//     DayOfWeek["Monday"] = "Monday";
+//     DayOfWeek["Tuesday"] = "Tuesday";
+//     DayOfWeek["Wednesday"] = "Wednesday";
+//     DayOfWeek["Thursday"] = "Thursday";
+//     DayOfWeek["Friday"] = "Friday";
+//     DayOfWeek["Saturday"] = "Saturday";
+//     DayOfWeek["Sunday"] = "Sunday";
+// })(DayOfWeek || (DayOfWeek = {}));
+// const userSchema = new mongoose.Schema({
+//     firstName: String,
+//     lastName: String,
+//     phoneNumber: String,
+//     email: String,
+//     // address: {
+//     //   street: { type: String, required: true },
+//     //   city: { type: String, required: true },
+//     //   state: { type: String, required: true },
+//     //   zip: { type: String, required: true },
+//     // },
+//     picture: String,
+//     maxTravelDistance: Number,
+//     proficiency: { type: String, enum: Object.values(ProficiencyLevel) },
+//     availability: [{
+//             dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: true },
+//             isAvailable: { type: Boolean, default: false },
+//         }],
+//     // games: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }],
+// });
+// const User = mongoose.model('User', userSchema);
+// export default User;

@@ -6,11 +6,11 @@
 // const GameModel = require('./game');
 
 import { ApolloServer, gql } from 'apollo-server';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+// import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import UserModel from './user';
-import LocationModel from './location';
-import AddressModel from './address';
-import GameModel from './game';
+// import LocationModel from './location';
+// import AddressModel from './address';
+// import GameModel from './game';
 
 
 const typeDefs = gql`
@@ -19,21 +19,21 @@ const typeDefs = gql`
     lastName: String!
     phoneNumber: String!
     email: String!
-    address: Address
+    # address: Address
     picture: String
     maxTravelDistance: Int
     proficiency: String
     availability: [Availability]
   }
 
-  type Game {
-    id: ID!
-    location: Location!
-    referees: [User]
-    date: String!
-    time: String!
-    proficiencyLevel: String!
-  }
+  # type Game {
+  #   id: ID!
+  #   location: Location!
+  #   referees: [User]
+  #   date: String!
+  #   time: String!
+  #   proficiencyLevel: String!
+  # }
 
   type Availability {
     dayOfWeek: DayOfWeek!
@@ -57,39 +57,39 @@ const typeDefs = gql`
 
   type Query {
     allUsers: [User]
-    usersByLastName(lastName: String!): [User]
-    usersByPhoneNumber(phoneNumber: String!): [User]
-    allLocations: [Location]
-    locationByName(name: String!): Location
-    allGames: [Game]
-    gamesByLocation(location: String!): [Game]
-    gamesByReferee(referee: String!): [Game]
-    gameById(id: ID!): Game
+    # usersByLastName(lastName: String!): [User]
+    # usersByPhoneNumber(phoneNumber: String!): [User]
+    # allLocations: [Location]
+    # locationByName(name: String!): Location
+    # allGames: [Game]
+    # gamesByLocation(location: String!): [Game]
+    # gamesByReferee(referee: String!): [Game]
+    # gameById(id: ID!): Game
   }
 
-  type Address {
-    street: String!
-    city: String!
-    state: String!
-    zip: String!
-  }
+  # type Address {
+  #   street: String!
+  #   city: String!
+  #   state: String!
+  #   zip: String!
+  # }
 
-  type Location {
-    name: String
-    address: Address
-  }
+  # type Location {
+  #   name: String
+  #   address: Address
+  # }
 
-  input AddressInput {
-  street: String!
-  city: String!
-  state: String!
-  zip: String!
-}
+#   input AddressInput {
+#   street: String!
+#   city: String!
+#   state: String!
+#   zip: String!
+# }
 
 type Mutation {
-  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!, address: AddressInput!,
+  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!,
     picture: String, maxTravelDistance: Int!, proficiency: String!, availability: [AvailabilityInput]): User!
-  updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String, address: AddressInput,
+  updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
     picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User
   deleteUser(id: ID!): User
 }
@@ -108,79 +108,79 @@ const resolvers = {
       }
     },
 
-    usersByLastName: async (_: any, args: { lastName: string; }) => {
-      try {
-        return await UserModel.find({ lastName: args.lastName });
-      } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch user(s) by last name');
-      }
-    },
+    // usersByLastName: async (_: any, args: { lastName: string; }) => {
+    //   try {
+    //     return await UserModel.find({ lastName: args.lastName });
+    //   } catch (error) {
+    //     console.error(error);
+    //     throw new Error('Failed to fetch user(s) by last name');
+    //   }
+    // },
 
-    usersByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
-      try {
-        return await UserModel.find({ phoneNumber: args.phoneNumber });
-      } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch user(s) by phone number');
-      }
-    },
+    // usersByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
+    //   try {
+    //     return await UserModel.find({ phoneNumber: args.phoneNumber });
+    //   } catch (error) {
+    //     console.error(error);
+    //     throw new Error('Failed to fetch user(s) by phone number');
+    //   }
+    // },
 
-    allLocations: async () => {
-      try {
-        return await LocationModel.find().populate('address');
-    } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch locations');
-      }
-  },
+  //   allLocations: async () => {
+  //     try {
+  //       return await LocationModel.find().populate('address');
+  //   } catch (error) {
+  //       console.error(error);
+  //       throw new Error('Failed to fetch locations');
+  //     }
+  // },
 
-    locationByName: async (_: any, args: { name: string; }) => {
-      try {
-        return await LocationModel.find({
-          name: { $regex: new RegExp(args.name, 'i') }
-        }).populate('address');
-        } catch (error) {
-          console.error(error);
-          throw new Error('Failed to fetch location by name');
-      }
-      },
+    // locationByName: async (_: any, args: { name: string; }) => {
+    //   try {
+    //     return await LocationModel.find({
+    //       name: { $regex: new RegExp(args.name, 'i') }
+    //     }).populate('address');
+    //     } catch (error) {
+    //       console.error(error);
+    //       throw new Error('Failed to fetch location by name');
+    //   }
+    //   },
 
-      allGames: async () => {
-      try {
-        return await GameModel.find({});
-      } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch all games');
-      }
-    },
+//       allGames: async () => {
+//       try {
+//         return await GameModel.find({});
+//       } catch (error) {
+//         console.error(error);
+//         throw new Error('Failed to fetch all games');
+//       }
+//     },
 
-    gameById: async (_: any, { id }: {id: string}) => {
-  try {
-    return await GameModel.findById(id);
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch game with id ${id}`);
-  }
-},
+//     gameById: async (_: any, { id }: {id: string}) => {
+//   try {
+//     return await GameModel.findById(id);
+//   } catch (error) {
+//     console.error(error);
+//     throw new Error(`Failed to fetch game with id ${id}`);
+//   }
+// },
 
-    gamesByLocation: async (_: any, args: { location: string; }) => {
-      try {
-        return await GameModel.find({ location: args.location });
-      } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch games by location');
-      }
-    },
+//     gamesByLocation: async (_: any, args: { location: string; }) => {
+//       try {
+//         return await GameModel.find({ location: args.location });
+//       } catch (error) {
+//         console.error(error);
+//         throw new Error('Failed to fetch games by location');
+//       }
+//     },
 
-    gamesByReferee: async (_: any, args: { referee: string; }) => {
-      try {
-        return await GameModel.find({ referee: args.referee });
-      } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch games by referee');
-      }
-    },
+//     gamesByReferee: async (_: any, args: { referee: string; }) => {
+//       try {
+//         return await GameModel.find({ referee: args.referee });
+//       } catch (error) {
+//         console.error(error);
+//         throw new Error('Failed to fetch games by referee');
+//       }
+//     },
   },
 
 Mutation: {
@@ -192,7 +192,7 @@ Mutation: {
       phoneNumber,
       email,
       picture,
-      address,
+      // address,
       maxTravelDistance,
       proficiency,
       availability,
@@ -202,12 +202,12 @@ Mutation: {
       phoneNumber: string;
       email: string;
       picture?: string;
-      address: {
-        street: string;
-        city: string;
-        state: string;
-        zip: string;
-      };
+      // address: {
+        // street: string;
+        // city: string;
+        // state: string;
+        // zip: string;
+      // };
       maxTravelDistance: number;
       proficiency: string;
       availability: string[];
@@ -221,42 +221,65 @@ Mutation: {
         phoneNumber,
         email,
         picture,
-        address,
+        // address,
         maxTravelDistance,
         proficiency,
         availability,
       });
+      // console.log('HERE IS THE ADDRESS', address);
+      // console.log('HERE IS THE ADDRESS', address);
+      // console.log('HERE IS THE ADDRESS', address);
+
       const user = new UserModel({
         firstName,
         lastName,
         phoneNumber,
         email,
         picture,
-        address,
+        // address: {
+        //   street: address.street,
+        //   city: address.city,
+        //   state: address.state,
+        //   zip: address.zip,
+        // },
         maxTravelDistance,
         proficiency,
         availability,
       });
 
       console.log('User model:', user);
+      // console.log('User model:', user);
+      // console.log('User model:', user);
+      // console.log('User model address:', user.address);
+      // console.log('User model address:', user.address);
+      // console.log('User model address:', user.address);
 
-      return await user.save();
-    } catch (error) {
-      console.error(error);
-      throw new Error('Failed to create user');
+
+
+      const result = await user.save();
+      console.log('Result of save operation:', result);
+      return result;
     }
+    catch (error) {
+  if (error instanceof Error) {
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+  }
+  console.error('Error object:', error);
+  throw new Error('Failed to create user');
+}
   },
 },
-Game: {
-  location: async (parent: any) => {
-    try {
-      return await LocationModel.findById(parent.location);
-    } catch (error) {
-      console.error(error);
-      throw new Error('Failed to fetch location for game');
-    }
-  },
-},
+// Game: {
+//   location: async (parent: any) => {
+//     try {
+//       return await LocationModel.findById(parent.location);
+//     } catch (error) {
+//       console.error(error);
+//       throw new Error('Failed to fetch location for game');
+//     }
+//   },
+// },
 };
 
 
