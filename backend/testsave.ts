@@ -1,15 +1,15 @@
-import User from './user.js';
+import User from './user';
 import mongoose from 'mongoose';
 
 mongoose.connect('mongodb://localhost:27017/refSchedule');
 
 const user = new User({
-  firstName: 'Test',
-  lastName: 'User',
+  firstName: 'Test3',
+  lastName: 'User3',
   phoneNumber: '1234567890',
   email: 'test@example.com',
   picture: 'http://example.com/test.jpg',
-  maxTravelDistance: 10,
+  maxTravelDistance: 20,
   availability: [{
     dayOfWeek: 'Monday',
     isAvailable: true,
@@ -17,9 +17,14 @@ const user = new User({
 });
 
 user.save()
-  .then(() => console.log('User saved successfully'))
-  .catch(err => console.error('Error saving user:', err));
-
+  .then(() => {
+    console.log('User saved successfully');
+    mongoose.connection.close();
+  })
+  .catch(err => {
+    console.error('Error saving user:', err);
+    mongoose.connection.close();
+  });
 
 // import mongoose from 'mongoose';
 // import User from './user.js';

@@ -37,3 +37,22 @@ Availability: The application checks the referee's availability to ensure they a
 The application is built with TypeScript and uses Mongoose for MongoDB object modeling. The User.ts file you've shared defines a User model, which represents a referee in the application. The model includes properties for the referee's first name, last name, email, address, profile picture, maximum travel distance, proficiency level, availability, and the games they are assigned to.
 
 In future sessions, you can refer to this summary to provide context about your project.
+
+
+Think of your application as a LEGO city.
+
+1. The server.ts file is like the baseplate of your LEGO city. It's the foundation that everything else is built on. In this file, you're setting up the connection to your MongoDB database, which is like laying the groundwork for your city. Without this baseplate, you wouldn't be able to build anything else.
+
+2. The MongoDB database is like the storage box where all your LEGO bricks are kept. It's where all the data for your application is stored, and you can add, remove, or change bricks (data) as needed.
+
+3. The mongoose.connect() function in the server.ts file is like opening the storage box. It establishes a connection to the MongoDB database, allowing you to access the bricks inside.
+
+4. The graphqlServer.ts file is like the buildings and structures you build on your baseplate. This file defines your GraphQL API, which is like the layout of your city. It specifies what types of data (bricks) you can query and mutate (use), and how to fetch or change this data.
+
+5. The Apollo Server created in the graphqlServer.ts file is like the city's town hall. It's the central hub that handles all GraphQL requests (instructions for what to build) and returns responses (the built structures).
+
+6. The resolvers in the graphqlServer.ts file are like the construction workers in your city. They carry out the instructions specified in the GraphQL requests. For example, the createUser resolver is like a construction worker who's been instructed to build a new house (user). It creates a new User model (house blueprint), then calls user.save() to save the new user (build the house) in the MongoDB database (storage box).
+
+7. The server.listen() function in the graphqlServer.ts file is like opening the city gates. It starts the Apollo Server, allowing it to start accepting GraphQL requests (building instructions).
+
+So, when you run your application, the server.ts file is run first to establish a connection to the MongoDB database (open the storage box). Then, the graphqlServer.ts file is run to start the Apollo Server (open the city gates) and begin accepting GraphQL requests (building instructions).

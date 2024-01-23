@@ -226,9 +226,6 @@ Mutation: {
         proficiency,
         availability,
       });
-      // console.log('HERE IS THE ADDRESS', address);
-      // console.log('HERE IS THE ADDRESS', address);
-      // console.log('HERE IS THE ADDRESS', address);
 
       const user = new UserModel({
         firstName,
@@ -248,14 +245,6 @@ Mutation: {
       });
 
       console.log('User model:', user);
-      // console.log('User model:', user);
-      // console.log('User model:', user);
-      // console.log('User model address:', user.address);
-      // console.log('User model address:', user.address);
-      // console.log('User model address:', user.address);
-
-
-
       const result = await user.save();
       console.log('Result of save operation:', result);
       return result;
