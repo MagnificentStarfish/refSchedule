@@ -15,7 +15,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { ApolloServer, gql } from 'apollo-server';
 // import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import UserModel from './user';
+import UserModel from '../src/user';
 // import LocationModel from './location';
 // import AddressModel from './address';
 // import GameModel from './game';
@@ -181,7 +181,7 @@ const resolvers = {
         //     },
     },
     Mutation: {
-        createUser: (_, { firstName, lastName, phoneNumber, email, picture, 
+        createUser: (_, { firstName, lastName, phoneNumber, email, picture,
         // address,
         maxTravelDistance, proficiency, availability, }) => __awaiter(void 0, void 0, void 0, function* () {
             try {
