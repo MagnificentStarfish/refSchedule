@@ -23,12 +23,12 @@ import UserModel from './user';
 const typeDefs = gql`
   type User {
     firstName: String!
-    lastName: String
-    phoneNumber: String
-    email: String
-    # address: Address
+    lastName: String!
+    phoneNumber: String!
+    email: String!
+    address: Address!
     picture: String
-    maxTravelDistance: Int
+    maxTravelDistance: Int!
     # proficiency: String
     availability: [Availability]
   }
@@ -74,28 +74,28 @@ const typeDefs = gql`
     # gameById(id: ID!): Game
   }
 
-  # type Address {
-  #   street: String!
-  #   city: String!
-  #   state: String!
-  #   zip: String!
-  # }
+  type Address {
+    street: String!
+    city: String!
+    state: String!
+    zip: String!
+  }
 
   # type Location {
   #   name: String
   #   address: Address
   # }
 
-#   input AddressInput {
-#   street: String!
-#   city: String!
-#   state: String!
-#   zip: String!
-# }
+  input AddressInput {
+  street: String!
+  city: String!
+  state: String!
+  zip: String!
+}
 
 type Mutation {
-  createUser(firstName: String!, lastName: String, phoneNumber: String, email: String,
-    picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User!
+  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!, address: AddressInput!,
+    picture: String, maxTravelDistance: Int!, proficiency: String, availability: [AvailabilityInput]): User!
   updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
     picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User
   deleteUser(id: ID!): User
@@ -189,18 +189,68 @@ const resolvers = {
 //       }
 //     },
   },
-
 Mutation: {
+  createUser: async (
+    _: any,
+    {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      address,
+      picture,
+      maxTravelDistance,
+      proficiency,
+      availability,
+    }: {
+      firstName: string;
+      lastName: string;
+      phoneNumber: string;
+      email: string;
+      address: {
+        street: string;
+        city: string;
+        state: string;
+        zip: string;
+      };
+      picture?: string;
+      maxTravelDistance: number;
+      proficiency?: string;
+      availability?: Array<{ dayOfWeek: string; isAvailable: boolean }>;
+    }
+  ) => {
+    try {
+      const user = new UserModel({
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        address,
+        picture,
+        maxTravelDistance,
+        proficiency,
+        availability,
+      });
+
+      return await user.save();
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to create user');
+    }
+  },
+},
+};
+// Mutation: {
 //   createUser: async (_: any, { firstName }: { firstName: string; }) => {
 //   const user = new UserModel({ firstName });
 //   return await user.save();
 // },
 // },
 // };
-  createUser: async (_: any, { firstName }: { firstName: string; }) => {
-    const user = new UserModel({ firstName });
-    return await user.save();
-  },
+  // createUser: async (_: any, { firstName }: { firstName: string; }) => {
+  //   const user = new UserModel({ firstName });
+  //   return await user.save();
+  // },
   // createUser: async (
   //   _: any,
   //   {
@@ -286,8 +336,8 @@ Mutation: {
 //     }
 //   },
 // },
-},
-};
+// },
+// };
 
 
 // const server = new ApolloServer({ typeDefs, resolvers });

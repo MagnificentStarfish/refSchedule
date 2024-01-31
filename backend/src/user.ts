@@ -35,18 +35,18 @@ interface IUser extends Document {
 }
 
 const userSchema: Schema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  phoneNumber: String,
-  email: String,
-  // address: {
-  //   street: { type: String, required: true },
-  //   city: { type: String, required: true },
-  //   state: { type: String, required: true },
-  //   zip: { type: String, required: true },
-  // },
+  firstName: { type: String, required: true},
+  lastName: { type: String, required: true},
+  phoneNumber: { type: String, required: true},
+  email: {type: String, required: true, unique: true, lowercase: true, trim: true, match: /.+@.+\..+/},
+  address: {
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zip: { type: String, required: true },
+  },
   picture: String,
-  maxTravelDistance: Number,
+  maxTravelDistance: {type: Number, required: true, min: 0, max: 1000},
   proficiency: { type: String, enum: Object.values(ProficiencyLevel)},
   availability: [{
     dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: false },
