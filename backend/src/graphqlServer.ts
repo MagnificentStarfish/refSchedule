@@ -6,19 +6,19 @@
 // const GameModel = require('./game');
 
 import { ApolloServer, gql } from 'apollo-server';
-import mongoose from 'mongoose';
+// import mongoose from './server';
 // import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import UserModel from './user';
 // import LocationModel from './location';
 // import AddressModel from './address';
 // import GameModel from './game';
 
-mongoose.connect('mongodb://localhost:27017/refSchedule', {
-  }).then(() => {
-    console.log('Connected to MongoDB');
-  }).catch((error) => {
-    console.error('Failed to connect to MongoDB', error);
-  });
+// mongoose.connect('mongodb://localhost:27017/refSchedule', {
+//   }).then(() => {
+//     console.log('Connected to MongoDB');
+//   }).catch((error) => {
+//     console.error('Failed to connect to MongoDB', error);
+//   });
 
 const typeDefs = gql`
   type User {
@@ -290,8 +290,10 @@ Mutation: {
 };
 
 
-const server = new ApolloServer({ typeDefs, resolvers });
+// const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen().then(({ url }: { url: string }) => {
-  console.log(`Server ready at ${url}`);
-});
+// server.listen().then(({ url }: { url: string }) => {
+//   console.log(`Server ready at ${url}`);
+// });
+
+export { typeDefs, resolvers}

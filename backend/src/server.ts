@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import { ApolloServer } from 'apollo-server';
+import { typeDefs } from './graphqlServer';
+import { resolvers } from './graphqlServer';
 
 async function connectToDatabase() {
   try {
@@ -21,6 +24,12 @@ async function connectToDatabase() {
     });
 
     mongoose.set('debug', true);
+
+    // Start Apollo Server after connecting to the database
+    const server = new ApolloServer({ typeDefs, resolvers });
+    server.listen().then(({ url }) => {
+      console.log(`🚀 Server ready at ${url}`);
+    });
   } catch (error) {
     console.error('Failed to connect to MongoDB', error);
   }
