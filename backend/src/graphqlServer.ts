@@ -13,12 +13,12 @@ import UserModel from './user';
 // import AddressModel from './address';
 // import GameModel from './game';
 
-// mongoose.connect('mongodb://localhost:27017/refSchedule', {
-//   }).then(() => {
-//     console.log('Connected to MongoDB');
-//   }).catch((error) => {
-//     console.error('Failed to connect to MongoDB', error);
-//   });
+mongoose.connect('mongodb://localhost:27017/refSchedule', {
+  }).then(() => {
+    console.log('Connected to MongoDB');
+  }).catch((error) => {
+    console.error('Failed to connect to MongoDB', error);
+  });
 
 const typeDefs = gql`
   type User {
@@ -191,6 +191,12 @@ const resolvers = {
   },
 
 Mutation: {
+//   createUser: async (_: any, { firstName }: { firstName: string; }) => {
+//   const user = new UserModel({ firstName });
+//   return await user.save();
+// },
+// },
+// };
   createUser: async (_: any, { firstName }: { firstName: string; }) => {
     const user = new UserModel({ firstName });
     return await user.save();
@@ -207,8 +213,8 @@ Mutation: {
   //     maxTravelDistance,
   //     proficiency,
   //     availability,
-  //   }: {
-  //     firstName: string;
+    // }: {
+      // firstName: string;
   //     lastName: string;
   //     phoneNumber: string;
   //     email: string;
@@ -226,8 +232,8 @@ Mutation: {
   // ) => {
   //   try {
   //     console.log('Creating user...');
-//       console.log('Input data:', {
-//         firstName,
+  //     console.log('Input data:', {
+  //       firstName,
 //         lastName,
 //         phoneNumber,
 //         email,
@@ -236,10 +242,10 @@ Mutation: {
 //         maxTravelDistance,
 //         proficiency,
 //         availability,
-//       });
+      // });
 
-//       const user = new UserModel({
-//         firstName,
+      // const user = new UserModel({
+      //   firstName,
 //         lastName,
 //         phoneNumber,
 //         email,
@@ -253,7 +259,7 @@ Mutation: {
 //         maxTravelDistance,
 //         proficiency,
 //         availability,
-//       });
+      // });
 
 //       console.log('User model:', user);
 //       const result = await user.save();
@@ -268,7 +274,7 @@ Mutation: {
 //   console.error('Error object:', error);
 //   throw new Error('Failed to create user');
 // }
-  },
+//   },
 
 // Game: {
 //   location: async (parent: any) => {
@@ -280,6 +286,7 @@ Mutation: {
 //     }
 //   },
 // },
+},
 };
 
 
