@@ -6,23 +6,30 @@
 // const GameModel = require('./game');
 
 import { ApolloServer, gql } from 'apollo-server';
+import mongoose from 'mongoose';
 // import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import UserModel from './user';
 // import LocationModel from './location';
 // import AddressModel from './address';
 // import GameModel from './game';
 
+// mongoose.connect('mongodb://localhost:27017/refSchedule', {
+//   }).then(() => {
+//     console.log('Connected to MongoDB');
+//   }).catch((error) => {
+//     console.error('Failed to connect to MongoDB', error);
+//   });
 
 const typeDefs = gql`
   type User {
     firstName: String!
-    lastName: String!
-    phoneNumber: String!
-    email: String!
+    lastName: String
+    phoneNumber: String
+    email: String
     # address: Address
     picture: String
     maxTravelDistance: Int
-    proficiency: String
+    # proficiency: String
     availability: [Availability]
   }
 
@@ -36,12 +43,12 @@ const typeDefs = gql`
   # }
 
   type Availability {
-    dayOfWeek: DayOfWeek!
+    dayOfWeek: DayOfWeek
     isAvailable: Boolean
   }
 
   input AvailabilityInput {
-  dayOfWeek: DayOfWeek!
+  dayOfWeek: DayOfWeek
   isAvailable: Boolean
 }
 
@@ -87,8 +94,8 @@ const typeDefs = gql`
 # }
 
 type Mutation {
-  createUser(firstName: String!, lastName: String!, phoneNumber: String!, email: String!,
-    picture: String, maxTravelDistance: Int!, proficiency: String!, availability: [AvailabilityInput]): User!
+  createUser(firstName: String!, lastName: String, phoneNumber: String, email: String,
+    picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User!
   updateUser(id: ID!, firstName: String, lastName: String, phoneNumber: String, email: String,
     picture: String, maxTravelDistance: Int, proficiency: String, availability: [AvailabilityInput]): User
   deleteUser(id: ID!): User
@@ -184,81 +191,85 @@ const resolvers = {
   },
 
 Mutation: {
-  createUser: async (
-    _: any,
-    {
-      firstName,
-      lastName,
-      phoneNumber,
-      email,
-      picture,
-      // address,
-      maxTravelDistance,
-      proficiency,
-      availability,
-    }: {
-      firstName: string;
-      lastName: string;
-      phoneNumber: string;
-      email: string;
-      picture?: string;
-      // address: {
-        // street: string;
-        // city: string;
-        // state: string;
-        // zip: string;
-      // };
-      maxTravelDistance: number;
-      proficiency: string;
-      availability: string[];
-    }
-  ) => {
-    try {
-      console.log('Creating user...');
-      console.log('Input data:', {
-        firstName,
-        lastName,
-        phoneNumber,
-        email,
-        picture,
-        // address,
-        maxTravelDistance,
-        proficiency,
-        availability,
-      });
-
-      const user = new UserModel({
-        firstName,
-        lastName,
-        phoneNumber,
-        email,
-        picture,
-        // address: {
-        //   street: address.street,
-        //   city: address.city,
-        //   state: address.state,
-        //   zip: address.zip,
-        // },
-        maxTravelDistance,
-        proficiency,
-        availability,
-      });
-
-      console.log('User model:', user);
-      const result = await user.save();
-      console.log('Result of save operation:', result);
-      return result;
-    }
-    catch (error) {
-  if (error instanceof Error) {
-    console.error('Error name:', error.name);
-    console.error('Error message:', error.message);
-  }
-  console.error('Error object:', error);
-  throw new Error('Failed to create user');
-}
+  createUser: async (_: any, { firstName }: { firstName: string; }) => {
+    const user = new UserModel({ firstName });
+    return await user.save();
   },
-},
+  // createUser: async (
+  //   _: any,
+  //   {
+  //     firstName,
+  //     lastName,
+  //     phoneNumber,
+  //     email,
+  //     picture,
+  //     // address,
+  //     maxTravelDistance,
+  //     proficiency,
+  //     availability,
+  //   }: {
+  //     firstName: string;
+  //     lastName: string;
+  //     phoneNumber: string;
+  //     email: string;
+  //     picture?: string;
+  //     // address: {
+  //       // street: string;
+  //       // city: string;
+  //       // state: string;
+  //       // zip: string;
+  //     // };
+  //     maxTravelDistance: number;
+  //     proficiency?: string;
+  //     availability: string[];
+  //   }
+  // ) => {
+  //   try {
+  //     console.log('Creating user...');
+//       console.log('Input data:', {
+//         firstName,
+//         lastName,
+//         phoneNumber,
+//         email,
+//         picture,
+//         // address,
+//         maxTravelDistance,
+//         proficiency,
+//         availability,
+//       });
+
+//       const user = new UserModel({
+//         firstName,
+//         lastName,
+//         phoneNumber,
+//         email,
+//         picture,
+//         // address: {
+//         //   street: address.street,
+//         //   city: address.city,
+//         //   state: address.state,
+//         //   zip: address.zip,
+//         // },
+//         maxTravelDistance,
+//         proficiency,
+//         availability,
+//       });
+
+//       console.log('User model:', user);
+//       const result = await user.save();
+//       console.log('Result of save operation:', result);
+//       return result;
+//     }
+//     catch (error) {
+//   if (error instanceof Error) {
+//     console.error('Error name:', error.name);
+//     console.error('Error message:', error.message);
+//   }
+//   console.error('Error object:', error);
+//   throw new Error('Failed to create user');
+// }
+  },
+
 // Game: {
 //   location: async (parent: any) => {
 //     try {

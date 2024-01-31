@@ -49,7 +49,7 @@ const userSchema: Schema = new mongoose.Schema({
   maxTravelDistance: Number,
   proficiency: { type: String, enum: Object.values(ProficiencyLevel)},
   availability: [{
-    dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: true },
+    dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: false },
     isAvailable: { type: Boolean, default: false },
   }],
   // games: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }],
