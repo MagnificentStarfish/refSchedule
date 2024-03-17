@@ -4,10 +4,16 @@ import mongoose from 'mongoose';
 mongoose.connect('mongodb://localhost:27017/refSchedule');
 
 const user = new User({
-  firstName: 'Test3',
-  lastName: 'User3',
+  firstName: 'Test4',
+  lastName: 'User4',
   phoneNumber: '1234567890',
   email: 'test@example.com',
+  address: {
+    street: '456 Main St',
+    city: 'Mytown',
+    state: 'WA',
+    zip: '12355',
+  },
   picture: 'http://example.com/test.jpg',
   maxTravelDistance: 20,
   availability: [{
@@ -19,6 +25,7 @@ const user = new User({
 user.save()
   .then(() => {
     console.log('User saved successfully');
+    console.log('User:', user);
     mongoose.connection.close();
   })
   .catch(err => {
