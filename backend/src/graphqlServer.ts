@@ -8,7 +8,7 @@
 import { ApolloServer, gql } from 'apollo-server';
 // import mongoose from './server';
 // import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import UserModel from './user';
+import User from './user';
 // import LocationModel from './location';
 // import AddressModel from './address';
 // import GameModel from './game';
@@ -108,7 +108,7 @@ const resolvers = {
   Query: {
     allUsers: async () => {
       try {
-        return await UserModel.find().populate('games');
+        return await User.find();
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch users');
@@ -220,7 +220,7 @@ Mutation: {
     }
   ) => {
     try {
-      const user = new UserModel({
+      const user = new User({
         firstName,
         lastName,
         phoneNumber,
