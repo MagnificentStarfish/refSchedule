@@ -1,22 +1,19 @@
 import User from './user';
 import mongoose from 'mongoose';
 
-
 mongoose.connect('mongodb://localhost:27017/refSchedule');
-
 
 export const getUserByPhoneNumber = async (phoneNumber: string) => {
     try {
-        const user = await User.find({ phoneNumber: phoneNumber });
-        // const user = await User.findOne({ phoneNumber: phoneNumber });  For returning first match
-        if (user.length === 0) {
+        const users = await User.find({ phoneNumber: phoneNumber });
+        if (users.length === 0) {
             console.log('No user with this phone number was found');
-            mongoose.connection.close();
-            return null;
+        } else if (users.length > 1) {
+            console.log(`Multiple users found with phone number: ${phoneNumber}`);
         }
-        console.log(`User: ${user}`);
+        console.log(`User(s): ${users}`);
         mongoose.connection.close();
-        return user;
+        return users;
     } catch (error) {
         console.error('An error occurred:', error);
         mongoose.connection.close();

@@ -108,7 +108,8 @@ const resolvers = {
   Query: {
     allUsers: async () => {
       try {
-        return await User.find();
+        const users = await User.find();
+        return users;
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch users');
@@ -117,7 +118,7 @@ const resolvers = {
 
     getUserByLastName: async (_: any, args: { lastName: string; }) => {
       try {
-        return await User.find({ lastName: args.lastName });
+        const users = await User.find({ lastName: args.lastName });
       } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch user(s) by last name');
@@ -126,7 +127,11 @@ const resolvers = {
 
     getUserByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
       try {
-        return await User.find({ phoneNumber: args.phoneNumber });
+        const users = await User.find({ phoneNumber: args.phoneNumber });
+        if (users.length > 1) {
+          console.log('Found multiple users with the same phone number: ${args.phoneNumber}');
+        }
+        return users;
       } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch user(s) by phone number');
