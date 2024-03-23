@@ -64,8 +64,8 @@ const typeDefs = gql`
 
   type Query {
     allUsers: [User]
-    # usersByLastName(lastName: String!): [User]
-    # usersByPhoneNumber(phoneNumber: String!): [User]
+    getUserByLastName(lastName: String!): [User]
+    getUserByPhoneNumber(phoneNumber: String!): [User]
     # allLocations: [Location]
     # locationByName(name: String!): Location
     # allGames: [Game]
@@ -115,23 +115,23 @@ const resolvers = {
       }
     },
 
-    // usersByLastName: async (_: any, args: { lastName: string; }) => {
-    //   try {
-    //     return await UserModel.find({ lastName: args.lastName });
-    //   } catch (error) {
-    //     console.error(error);
-    //     throw new Error('Failed to fetch user(s) by last name');
-    //   }
-    // },
+    getUserByLastName: async (_: any, args: { lastName: string; }) => {
+      try {
+        return await User.find({ lastName: args.lastName });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch user(s) by last name');
+      }
+    },
 
-    // usersByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
-    //   try {
-    //     return await UserModel.find({ phoneNumber: args.phoneNumber });
-    //   } catch (error) {
-    //     console.error(error);
-    //     throw new Error('Failed to fetch user(s) by phone number');
-    //   }
-    // },
+    getUserByPhoneNumber: async (_: any, args: { phoneNumber: string; }) => {
+      try {
+        return await User.find({ phoneNumber: args.phoneNumber });
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch user(s) by phone number');
+      }
+    },
 
   //   allLocations: async () => {
   //     try {
