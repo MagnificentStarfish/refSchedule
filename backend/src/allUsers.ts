@@ -21,19 +21,3 @@ const allUsers = async () => {
 };
 
   allUsers();
-
-
-const getUserByPhoneNumber = async (phoneNumber: string) => {
-    try {
-        const user = await User.findOne({ phoneNumber: phoneNumber });
-        console.log(`User: ${user}`);
-        mongoose.connection.close();
-        return user;
-    } catch (error) {
-        console.error(error);
-        mongoose.connection.close();
-        throw new Error('Failed to fetch user by phone number');
-    }
-};
-
-getUserByPhoneNumber('1234567890');
