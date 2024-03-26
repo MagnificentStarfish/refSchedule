@@ -119,6 +119,7 @@ const resolvers = {
     getUserByLastName: async (_: any, args: { lastName: string; }) => {
       try {
         const users = await User.find({ lastName: args.lastName });
+        return users;
       } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch user(s) by last name');
