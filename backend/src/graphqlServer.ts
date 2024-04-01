@@ -4,7 +4,7 @@
 // const LocationModel = require('./location');
 // const AddressModel = require('./address');
 // const GameModel = require('./game');
-
+import { MongoError, MongoServerError } from 'mongodb';
 import { ApolloServer, gql } from 'apollo-server';
 // import mongoose from './server';
 // import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
@@ -225,6 +225,7 @@ Mutation: {
       availability?: Array<{ dayOfWeek: string; isAvailable: boolean }>;
     }
   ) => {
+    let user;
     try {
       const user = new User({
         firstName,
@@ -238,11 +239,15 @@ Mutation: {
         availability,
       });
 
-      return await user.save();
-    } catch (error) {
-      console.error(error);
-      throw new Error('Failed to create user');
+      await user.save();
+    } catch (error: unknown) {
+      if (error instanceof MongoServerError && (error.code === 11000 || error.code === 11001)) {
+        throw new Error('A user with this phone number already exists.');
+      } else {
+        throw new Error('An error occurred while creating the user.');
+      }
     }
+    return user;
   },
 },
 };
