@@ -227,7 +227,7 @@ Mutation: {
   ) => {
     let user;
     try {
-      const user = new User({
+      user = new User({
         firstName,
         lastName,
         phoneNumber,
@@ -240,11 +240,13 @@ Mutation: {
       });
 
       await user.save();
-    } catch (error: unknown) {
-      if (error instanceof MongoServerError && (error.code === 11000 || error.code === 11001)) {
-        throw new Error('A user with this phone number already exists.');
+    } catch (error: any) {
+      if (error.message.includes('E11000 duplicate key error')) {
+        let field = Object.keys(error.keyPattern)[0];
+        let message = `A user with this ${field} already exists.`;
+        throw new Error(message);
       } else {
-        throw new Error('An error occurred while creating the user.');
+        throw error;
       }
     }
     return user;
