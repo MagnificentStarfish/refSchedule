@@ -243,7 +243,8 @@ Mutation: {
     } catch (error: any) {
       if (error.message.includes('E11000 duplicate key error')) {
         let field = Object.keys(error.keyPattern)[0];
-        let message = `A user with this ${field} already exists.`;
+        let userEmail = error.keyValue[field];
+        let message = `A user with this ${field} (${userEmail}) already exists.`;
         throw new Error(message);
       } else {
         throw error;
