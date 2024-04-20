@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node","jest"],
     "target": "es6",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
@@ -11,5 +11,5 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "__tests__"],
 }
