@@ -25,7 +25,6 @@ async function connectToDatabase() {
 
     mongoose.set('debug', true);
 
-    // Start Apollo Server after connecting to the database
     const server = new ApolloServer({ typeDefs, resolvers });
     server.listen().then(({ url }) => {
       console.log(`🚀 Server ready at ${url}`);

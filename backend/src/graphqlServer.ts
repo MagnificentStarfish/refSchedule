@@ -66,6 +66,7 @@ const typeDefs = gql`
     allUsers: [User]
     getUserByLastName(lastName: String!): [User]
     getUserByPhoneNumber(phoneNumber: String!): [User]
+    healthCheck: String
     # allLocations: [Location]
     # locationByName(name: String!): Location
     # allGames: [Game]
@@ -138,6 +139,8 @@ const resolvers = {
         throw new Error('Failed to fetch user(s) by phone number');
       }
     },
+
+    healthCheck: () => 'Server is running',
 
   //   allLocations: async () => {
   //     try {

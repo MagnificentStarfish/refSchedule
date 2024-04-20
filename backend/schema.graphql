@@ -63,4 +63,5 @@ type Query {
     location(id: ID!): Location
     games: [Game]
     game(id: ID!): Game
+    healthCheck: String
 }
