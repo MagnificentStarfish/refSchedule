@@ -6,7 +6,7 @@ describe('Database Connection', () => {
     });
   });
 
-  it('successfully connects to the database', async () => {
+  test('successfully connects to the database', async () => {
     const db = mongoose.connection;
     expect(db.readyState).toBe(1); // 1 means connected
   });
