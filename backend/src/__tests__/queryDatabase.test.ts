@@ -1,4 +1,4 @@
-import User from '../src/user';
+import User from '../user';
 import mongoose from 'mongoose';
 
 
