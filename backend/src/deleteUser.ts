@@ -19,4 +19,4 @@ const deleteUser = async (email: string, phoneNumber: string) => {
   }
 };
 
-deleteUser('user@example.com', '123-456-7890');
+deleteUser('user@example.com', '2');
