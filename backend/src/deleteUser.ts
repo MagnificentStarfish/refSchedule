@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 mongoose.connect('mongodb://localhost:27017/refSchedule');
 
-const deleteUser = async (email: string, phoneNumber: string) => {
+export const deleteUser = async (email: string, phoneNumber: string) => {
   try {
     const usersToDelete = await User.find({
       $or: [{ email: email }, { phoneNumber: phoneNumber }]
@@ -31,4 +31,4 @@ const deleteUser = async (email: string, phoneNumber: string) => {
   }
 };
 
-deleteUser('01@winterfell.com', '1234567890');
+deleteUser('5@winterfell.com', 'banana');

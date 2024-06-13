@@ -40,4 +40,4 @@ const deleteUser = (email, phoneNumber) => __awaiter(void 0, void 0, void 0, fun
         throw new Error('Failed to delete user');
     }
 });
-deleteUser('01@winterfell.com', '1234567890');
+deleteUser('5@winterfell.com', 'banana');

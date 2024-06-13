@@ -55,3 +55,7 @@ Think of your application as a LEGO city.
 7. The server.listen() function in the graphqlServer.ts file is like opening the city gates. It starts the Apollo Server, allowing it to start accepting GraphQL requests (building instructions).
 
 So, when you run your application, the server.ts file is run first to establish a connection to the MongoDB database (open the storage box). Then, the graphqlServer.ts file is run to start the Apollo Server (open the city gates) and begin accepting GraphQL requests (building instructions).
+
+
+Get last test working.
+Figure out what it does and how it manipulates Mongoose.
