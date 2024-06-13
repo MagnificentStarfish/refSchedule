@@ -56,6 +56,10 @@ Think of your application as a LEGO city.
 
 So, when you run your application, the server.ts file is run first to establish a connection to the MongoDB database (open the storage box). Then, the graphqlServer.ts file is run to start the Apollo Server (open the city gates) and begin accepting GraphQL requests (building instructions).
 
+TSC has a `watch` component that will automatically transcribe files from .ts to .js.
+Pretty fancy but maybe only for personal projects.
+Not good for a group project most likely.
+
 
 Get last test working.
 Figure out what it does and how it manipulates Mongoose.
