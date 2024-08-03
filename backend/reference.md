@@ -63,3 +63,15 @@ Not good for a group project most likely.
 
 Get last test working.
 Figure out what it does and how it manipulates Mongoose.
+
+This is the test that we're trying to fix: deleteUser.test.ts
+When trying to understand what it does:
+// Mock the mongoose functions used in deleteUser
+jest.mock('mongoose', () => ({
+  // Mock the connect function
+  connect: jest.fn(),
+  // Mock the connection object with a close function
+  connection: {
+	close: jest.fn(),
+  },
+}));
