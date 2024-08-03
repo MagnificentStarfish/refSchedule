@@ -63,6 +63,7 @@ Not good for a group project most likely.
 
 Get last test working.
 Figure out what it does and how it manipulates Mongoose.
+Basically, instead of connecting to an actual database, it's going to pretend to connect to a database and pretend that it works just fine. So we're importing 'jest' and jest is then going to call the function 'mock' on the real mongoose with a fake version of mongoose. That way we can just pretend that everything is working and that it's able to connect. Here is the code below that shows where it's mocking mongoose.
 
 This is the test that we're trying to fix: deleteUser.test.ts
 When trying to understand what it does:
@@ -75,3 +76,5 @@ jest.mock('mongoose', () => ({
 	close: jest.fn(),
   },
 }));
+
+By mocking the Mongoose connection, we are basically testing our code without connecting to a database, which could bring in additional problems. If we are able to successfully pass our tests, we know that our code works and if we do have errors when connecting to the database on a live server, we know that the issue is not within the code for that particular function (eg deleteUser). So, before connecting to a database, we know that our code works in isolation and that we are testing only what our code is supposed to do (deleteUser) whereas if we connected to a database and tested our code on a live server and had errors, we wouldn't be able to know if it was our deleteUser function causing problems, the database giving us problems, or establishing to the database giving us problems. It helps isolate the problems before going into production, which I like.
