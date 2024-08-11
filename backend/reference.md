@@ -154,28 +154,30 @@ What is tripping me up is there are multiple definitions of each thing. Like we 
 
 GraphQL Schema (Menu):
 
-Purpose: Defines what data clients can request and how they can interact with it.
-Analogy: Think of it as the menu in a restaurant. It tells customers what pizzas are available, what sizes they come in, what toppings they can choose, and the price.
-Example: The menu lists a "Margherita Pizza" with options for size (small, medium, large) and toppings (basil, mozzarella, tomatoes).
+-Purpose: Defines what data clients can request and how they can interact with it.
+-Analogy: Think of it as the menu in a restaurant. It tells customers what pizzas are available, what sizes they come in, what toppings they can choose, and the price.
+-Example: The menu lists a "Margherita Pizza" with options for size (small, medium, large) and toppings (basil, mozzarella, tomatoes).
+
 Mongoose Model (Recipe Book):
 
-Purpose: Defines how data is stored, validated, and retrieved from the database.
-Analogy: Think of it as the recipe book in the kitchen. It provides detailed instructions on how to make each pizza, including the ingredients, measurements, and steps.
-Example: The recipe book has a detailed recipe for "Margherita Pizza" that includes the exact amount of basil, mozzarella, and tomatoes needed for each size.
+-Purpose: Defines how data is stored, validated, and retrieved from the database.
+-Analogy: Think of it as the recipe book in the kitchen. It provides detailed instructions on how to make each pizza, including the ingredients, measurements, and steps.
+-Example: The recipe book has a detailed recipe for "Margherita Pizza" that includes the exact amount of basil, mozzarella, and tomatoes needed for each size.
+
 Combining the Concepts
 While it might seem like you could combine these definitions, they serve different roles and are used in different parts of the application. Here's a more detailed explanation:
 
 GraphQL Schema (Menu)
-Defines the structure of the data for the API.
-Ensures clients know what data they can request and what fields are required.
+-Defines the structure of the data for the API.
+-Ensures clients know what data they can request and what fields are required.
 
 Example:
 A pizza has a name, size, toppings, and price.
 Clients can query for a pizza and get these details.
 
 Mongoose Model (Recipe Book)
-Defines how the data is stored and validated in the database.
-Ensures data integrity and consistency.
+-Defines how the data is stored and validated in the database.
+-Ensures data integrity and consistency.
 
 Example:
 A pizza document in the database must have a name, size, toppings, and price.
