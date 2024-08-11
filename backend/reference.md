@@ -78,3 +78,16 @@ jest.mock('mongoose', () => ({
 }));
 
 By mocking the Mongoose connection, we are basically testing our code without connecting to a database, which could bring in additional problems. If we are able to successfully pass our tests, we know that our code works and if we do have errors when connecting to the database on a live server, we know that the issue is not within the code for that particular function (eg deleteUser). So, before connecting to a database, we know that our code works in isolation and that we are testing only what our code is supposed to do (deleteUser) whereas if we connected to a database and tested our code on a live server and had errors, we wouldn't be able to know if it was our deleteUser function causing problems, the database giving us problems, or establishing to the database giving us problems. It helps isolate the problems before going into production, which I like.
+
+
+Just trying to catch myself up to speed. I closed all my terminal tabs so I don't become too reliant on those and I can navigate my own project again after too much time away.
+I was able to breakdown the Postman content request. I need to always do a POST request with GraphQL. I also need to make sure I add the values: key `Content-Type` value: `application/json` regardless. And if I do the request as a GraphQL, I just send the Query as:
+{
+  allUsers {
+    id
+    firstName
+    lastName
+    phoneNumber
+  }
+}
+This just tells the server that it is going to be responsible for handling the incoming HTTP request, parsing the request body, and interacting with the database.
