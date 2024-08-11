@@ -11,19 +11,19 @@ export enum DayOfWeek {
   Sunday = 'Sunday',
 }
 
-// export interface IAddress {
-//   street: string;
-//   city: string;
-//   state: string;
-//   zip: string;
-// }
+export interface IAddress {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}
 
 interface IUser extends Document {
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
-  // address: IAddress;
+  address: IAddress;
   picture: string;
   maxTravelDistance: number;
   proficiency: ProficiencyLevel;

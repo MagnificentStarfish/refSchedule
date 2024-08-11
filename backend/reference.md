@@ -91,3 +91,61 @@ I was able to breakdown the Postman content request. I need to always do a POST 
   }
 }
 This just tells the server that it is going to be responsible for handling the incoming HTTP request, parsing the request body, and interacting with the database. If you wrote a server to accept incoming data and then try multiple different parsing methods to determine what kind of data it's receiving and then do stuff with it, it would be too resource intensive. That's why we write programs to receive a specific type of data and we make sure that we label the content-type so that the server knows what it's receiving.
+
+
+I commented back in the full user field to see why I originally commented out the users fields of address. Something made me comment it out and I don't recall. I also just found out that you can save Postman requests... I'll start doing that to make it easy on me and my memory.
+
+
+
+GraphQL Overview
+Imagine you have a restaurant menu. The menu lists different types of dishes (like appetizers, main courses, and desserts) and the ingredients in each dish. GraphQL is like a waiter who takes your order based on this menu. You can ask for exactly what you want, and the waiter (GraphQL) will bring it to you.
+
+Key Concepts
+Schema: Think of this as the menu. It defines what dishes (data) are available and what ingredients (fields) each dish has.
+
+Types: These are the categories on the menu. For example, you might have a "User" type, which is like a category for a dish that includes fields like name, email, and address.
+
+Queries: These are like asking the waiter for specific dishes. For example, you might ask for a list of all users or a specific user by their ID.
+
+Mutations: These are like placing an order to add, change, or remove a dish from the menu. For example, you might want to add a new user, update an existing user's information, or delete a user.
+
+Resolvers: These are the kitchen staff who prepare the dishes. They take the order (query or mutation) and fetch or modify the data accordingly.
+
+
+
+Mongoose Overview
+Mongoose is like the recipe book and pantry for a restaurant. It defines how dishes (data) should be prepared and stored.
+
+Models: These are the recipes. They define what ingredients (fields) a dish (document) should have and how it should be prepared (stored in the database).
+
+Schemas: These are the detailed instructions in the recipe. They specify the exact structure and rules for each dish.
+
+Example
+Let's say you have a restaurant that serves users (people) and locations (places).
+
+Schema: The menu lists "User" and "Location" as available dishes.
+
+Types:
+
+A "User" type might include fields like first name, last name, phone number, email, address, and availability.
+An "Address" type might include fields like street, city, state, and zip code.
+Queries:
+
+You can ask for a list of all users (allUsers).
+You can ask for a specific user by their ID (userById).
+Mutations:
+
+You can add a new user (createUser).
+You can update an existing user's information (updateUser).
+You can delete a user (deleteUser).
+Resolvers:
+
+When you ask for all users, the resolver goes to the database, fetches the list of users, and returns it to you.
+When you add a new user, the resolver takes the provided information, creates a new user in the database, and returns the newly created user.
+Putting It All Together
+When you interact with the GraphQL server, it's like placing an order at a restaurant. You specify exactly what you want (queries and mutations), and the server (waiter) uses the schema (menu) to understand your request. The resolvers (kitchen staff) then prepare the data according to the models and schemas (recipes) and return it to you.
+
+This way, you get exactly the data you need, no more, no less, just like getting the perfect dish at a restaurant.
+
+
+As a refresher, here is an overview of the tech stack. Ideally, I'll revisit this enough that I won't need such a lengthy refresher sessions, but just in case, here it is.
