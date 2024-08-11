@@ -4,7 +4,8 @@
     "@graphql-tools/utils": "^10.0.12",
     "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.13.0",
-    "graphql-tools": "^9.0.0"
+    "graphql-tools": "^9.0.0",
+    "mongoose": "^8.5.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

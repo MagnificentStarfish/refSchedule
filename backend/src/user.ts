@@ -18,27 +18,26 @@ export interface IAddress {
   zip: string;
 }
 
-interface IUser extends Document {
+export interface IUser extends Document {
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
   address: IAddress;
-  picture: string;
+  picture?: string;
   maxTravelDistance: number;
-  proficiency: ProficiencyLevel;
-  availability: [{
+  proficiency?: ProficiencyLevel;
+  availability: {
     dayOfWeek: DayOfWeek;
     isAvailable: boolean;
-  }];
-  // games: Schema.Types.ObjectId[];
+  }[];
 }
 
-const userSchema: Schema = new mongoose.Schema({
-  firstName: { type: String, required: true},
-  lastName: { type: String, required: true},
-  phoneNumber: { type: String, required: true, unique: true},
-  email: {type: String, required: true, unique: true, lowercase: true, trim: true, match: /.+@.+\..+/},
+const userSchema = new Schema<IUser>({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  phoneNumber: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true, match: /.+@.+\..+/ },
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
@@ -46,15 +45,17 @@ const userSchema: Schema = new mongoose.Schema({
     zip: { type: String, required: true },
   },
   picture: String,
-  maxTravelDistance: {type: Number, required: true, min: 0, max: 1000},
-  proficiency: { type: String, enum: Object.values(ProficiencyLevel)},
+  maxTravelDistance: { type: Number, required: true, min: 0, max: 1000 },
+  proficiency: { type: String, enum: Object.values(ProficiencyLevel) },
   availability: [{
     dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: false },
     isAvailable: { type: Boolean, default: false },
   }],
-  // games: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }],
 });
 
+console.log('User Schema:', userSchema);
+
 const User = mongoose.model<IUser>('User', userSchema);
+console.log('User model created successfully');
 
 export default User;
