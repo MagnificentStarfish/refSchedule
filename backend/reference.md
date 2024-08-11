@@ -90,4 +90,4 @@ I was able to breakdown the Postman content request. I need to always do a POST 
     phoneNumber
   }
 }
-This just tells the server that it is going to be responsible for handling the incoming HTTP request, parsing the request body, and interacting with the database.
+This just tells the server that it is going to be responsible for handling the incoming HTTP request, parsing the request body, and interacting with the database. If you wrote a server to accept incoming data and then try multiple different parsing methods to determine what kind of data it's receiving and then do stuff with it, it would be too resource intensive. That's why we write programs to receive a specific type of data and we make sure that we label the content-type so that the server knows what it's receiving.
