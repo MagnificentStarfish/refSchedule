@@ -149,3 +149,40 @@ This way, you get exactly the data you need, no more, no less, just like getting
 
 
 As a refresher, here is an overview of the tech stack. Ideally, I'll revisit this enough that I won't need such a lengthy refresher sessions, but just in case, here it is.
+What is tripping me up is there are multiple definitions of each thing. Like we have `user.ts` where we define a user and we also have `type User` definted in our graphqlServer.ts. Here is the restaurant analogy to try to sort between the two:
+
+
+GraphQL Schema (Menu):
+
+Purpose: Defines what data clients can request and how they can interact with it.
+Analogy: Think of it as the menu in a restaurant. It tells customers what pizzas are available, what sizes they come in, what toppings they can choose, and the price.
+Example: The menu lists a "Margherita Pizza" with options for size (small, medium, large) and toppings (basil, mozzarella, tomatoes).
+Mongoose Model (Recipe Book):
+
+Purpose: Defines how data is stored, validated, and retrieved from the database.
+Analogy: Think of it as the recipe book in the kitchen. It provides detailed instructions on how to make each pizza, including the ingredients, measurements, and steps.
+Example: The recipe book has a detailed recipe for "Margherita Pizza" that includes the exact amount of basil, mozzarella, and tomatoes needed for each size.
+Combining the Concepts
+While it might seem like you could combine these definitions, they serve different roles and are used in different parts of the application. Here's a more detailed explanation:
+
+GraphQL Schema (Menu)
+Defines the structure of the data for the API.
+Ensures clients know what data they can request and what fields are required.
+
+Example:
+A pizza has a name, size, toppings, and price.
+Clients can query for a pizza and get these details.
+
+Mongoose Model (Recipe Book)
+Defines how the data is stored and validated in the database.
+Ensures data integrity and consistency.
+
+Example:
+A pizza document in the database must have a name, size, toppings, and price.
+The toppings must be stored as an array of objects with specific fields.
+
+
+Summary
+GraphQL Schema (Menu): Defines the structure of the data for the API, ensuring clients know what data they can request.
+Mongoose Model (Recipe Book): Defines how the data is stored and validated in the database, ensuring data integrity and consistency.
+Both are necessary because they serve different purposes: one for defining the API and the other for managing the data storage and validation. This separation of concerns helps maintain a clean and organized codebase.
