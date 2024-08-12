@@ -191,3 +191,5 @@ Both are necessary because they serve different purposes: one for defining the A
 
 
 This problem of this test is winning. I can't get it to work. I am able to create, view all, and delete users by just running the files. I am able to create, view all, and delete users in Postman. It's just the test to confirm the deleteing of a user that is throwing a TypeError in the original user.ts file but that doesn't make sense to me because I am able to invoke those functions with no errors.
+
+I added a mutation to deleteUser since that seems like a major oversight. I also cleaned up a lot of dead code that has been commented out for months it seems. Now that I can delete, create, and view in postman and through the terminal, but test still does not work and I think I'm going to call it here for the day. I'll continue to lose to the test tomorrow.
