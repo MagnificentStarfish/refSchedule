@@ -31,4 +31,4 @@ export const deleteUser = async (email: string, phoneNumber: string) => {
   }
 };
 
-deleteUser('5@winterfell.com', 'banana');
+deleteUser('18@winterfell.com', '18');

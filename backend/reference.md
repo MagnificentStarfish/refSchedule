@@ -188,3 +188,6 @@ Summary
 GraphQL Schema (Menu): Defines the structure of the data for the API, ensuring clients know what data they can request.
 Mongoose Model (Recipe Book): Defines how the data is stored and validated in the database, ensuring data integrity and consistency.
 Both are necessary because they serve different purposes: one for defining the API and the other for managing the data storage and validation. This separation of concerns helps maintain a clean and organized codebase.
+
+
+This problem of this test is winning. I can't get it to work. I am able to create, view all, and delete users by just running the files. I am able to create, view all, and delete users in Postman. It's just the test to confirm the deleteing of a user that is throwing a TypeError in the original user.ts file but that doesn't make sense to me because I am able to invoke those functions with no errors.

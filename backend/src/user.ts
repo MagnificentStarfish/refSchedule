@@ -53,8 +53,6 @@ const userSchema = new Schema<IUser>({
   }],
 });
 
-console.log('User Schema:', userSchema);
-
 const User = mongoose.model<IUser>('User', userSchema);
 console.log('User model created successfully');
 
