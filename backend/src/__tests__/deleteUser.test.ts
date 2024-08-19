@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { deleteUser } from '../deleteUser';
-import User, { IUser } from '../user'; // Ensure correct import of User and IUser
+import User, { IUser } from '../user';
 import { Model } from 'mongoose';
 
 jest.mock('mongoose', () => ({
@@ -10,10 +10,8 @@ jest.mock('mongoose', () => ({
   },
 }));
 
-// Explicitly type User as Model<IUser>
 const UserModel = User as unknown as Model<IUser>;
 
-// Create a mock function for User.find and User.deleteMany
 (UserModel.find as jest.Mock) = jest.fn();
 (UserModel.deleteMany as jest.Mock) = jest.fn();
 
@@ -30,10 +28,8 @@ describe('deleteUser', () => {
     (UserModel.find as jest.Mock).mockResolvedValue([userToDelete]);
     (UserModel.deleteMany as jest.Mock).mockResolvedValue({ deletedCount: 1 });
 
-    // Act
     await deleteUser(email, phoneNumber);
 
-    // Assert
     expect(UserModel.find).toHaveBeenCalledWith({
       $or: [{ email: email }, { phoneNumber: phoneNumber }],
     });
