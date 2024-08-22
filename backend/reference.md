@@ -195,7 +195,16 @@ This problem of this test is winning. I can't get it to work. I am able to creat
 I added a mutation to deleteUser since that seems like a major oversight. I also cleaned up a lot of dead code that has been commented out for months it seems. Now that I can delete, create, and view in postman and through the terminal, but test still does not work and I think I'm going to call it here for the day. I'll continue to lose to the test tomorrow.
 
 
+----Schemas VS Models VS Interfaces----
 The document is a built-in Mongoose object. It has methods such as `.save()` and `.remove()` already built it. So when I am creating a new user, I inherit the properties and methods of the document. And then I add additional properties on top of those such as `firstName` and `lastName`. Then, when I create a user, I can call `.save()` and my user will be saved to the database. `This is for typescript only` and if I were to actually called `.save()`, it would still work and be created successfully because I imported mongoose and called `mongoose.model` which has the `.save()` method built in as well.
 The point of the interface is to inherit from Document, but what is inherited (eg `.save()`) will be included later. This just defines the shape of the user data and provides type checking at compile-time in Typescript.
-The schema defines the structure of the data and validates it to make sure that it follows the rules of the document (eg required fields, unique constraints, data types).
-BOTH the interface and the Schema definition have type checking. The interface does compile-time type checking for Typescript. The Schema definition does type checking at runtime for Mongoose. They both perform type checking, just at different times.
+The schema defines the structure of the data and gives the requirements for the data to be valid.
+The interface will check the data at compile-time.
+Finally, the model is an interface to interact with MongoDB.
+This allows CRUD and we use this to create a new user instance and save it to the database.
+The model will check the data using the rules given by the schema and they will be checked at runtime.
+
+- **Interface**: Defines the TypeScript fields and provides type checking at compile-time.
+- **Schema**: Specifies the rules and structure for the fields.
+- **Model**: Creates instances and ensures the fields adhere to the schema at runtime.
+- **Instance**: Represents an object that can be saved as a document in the database.
