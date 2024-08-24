@@ -210,5 +210,11 @@ The model will check the data using the rules given by the schema and they will 
 - **Instance**: Represents an object that can be saved as a document in the database.
 
 
-const User = mongoose.model<IUser>('User', userSchema);
-In the
+`const User = mongoose.model<IUser>('User', userSchema);`
+In the above, `User` and `userSchema` are parameters and `<IUser>` is a type annotation.
+A type anotation is specifying the type of a variable, which is one of the core fundamentals of TS.
+`let age: number = 25;`
+You can also specify a return type for a function.
+
+
+<T> is a generic type in TypeScript, used as a placeholder in functions, classes, or interfaces. It is better than using `any` because it ensures type safety through type checking. The specific type for <T> will be specified when the function, class, or interface is used.
