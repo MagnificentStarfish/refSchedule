@@ -208,3 +208,7 @@ The model will check the data using the rules given by the schema and they will 
 - **Schema**: Specifies the rules and structure for the fields.
 - **Model**: Creates instances and ensures the fields adhere to the schema at runtime.
 - **Instance**: Represents an object that can be saved as a document in the database.
+
+
+const User = mongoose.model<IUser>('User', userSchema);
+In the
