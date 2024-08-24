@@ -45,7 +45,7 @@ const userSchema = new Schema<IUser>({
     zip: { type: String, required: true },
   },
   picture: String,
-  maxTravelDistance: { type: Number, required: true, min: 0, max: 1000 },
+  maxTravelDistance: { type: Number, required: true, min: 0, max: 1000 }, // Need to measure in miles
   proficiency: { type: String, enum: Object.values(ProficiencyLevel) },
   availability: [{
     dayOfWeek: { type: String, enum: Object.values(DayOfWeek), required: false },
