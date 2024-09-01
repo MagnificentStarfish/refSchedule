@@ -1,9 +1,15 @@
 import User from './user';
 import mongoose from 'mongoose';
 
-mongoose.connect('mongodb://localhost:27017/refSchedule');
+const connectToDatabase = async () => {
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect('mongodb://localhost:27017/refSchedule');
+  }
+};
 
 export const deleteUser = async (email: string, phoneNumber: string) => {
+  await connectToDatabase();
+
   try {
     const usersToDelete = await User.find({
       $or: [{ email: email }, { phoneNumber: phoneNumber }]
@@ -22,13 +28,10 @@ export const deleteUser = async (email: string, phoneNumber: string) => {
     } else {
       console.log('No users found to delete.');
     }
-
-    mongoose.connection.close();
   } catch (error) {
     console.error(error);
-    mongoose.connection.close();
     throw new Error('Failed to delete user');
+  } finally {
+    mongoose.connection.close();
   }
 };
-
-deleteUser('18@winterfell.com', '18');
