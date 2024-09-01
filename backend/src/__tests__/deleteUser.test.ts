@@ -1,14 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, model, Model } from 'mongoose';
 import { deleteUser } from '../deleteUser';
 import User, { IUser } from '../user';
-import { Model } from 'mongoose';
 
-jest.mock('mongoose', () => ({
-  connect: jest.fn(),
-  connection: {
-    close: jest.fn(),
-  },
-}));
+jest.mock('mongoose', () => {
+  const actualMongoose = jest.requireActual('mongoose');
+  return {
+    ...actualMongoose,
+    connect: jest.fn(),
+    connection: {
+      close: jest.fn(),
+    },
+    Schema: jest.fn(),
+    model: jest.fn(),
+  };
+});
 
 const UserModel = User as unknown as Model<IUser>;
 
