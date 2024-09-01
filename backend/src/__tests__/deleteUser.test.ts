@@ -15,10 +15,14 @@ jest.mock('mongoose', () => {
   };
 });
 
-const UserModel = User as unknown as Model<IUser>;
-
-(UserModel.find as jest.Mock) = jest.fn();
-(UserModel.deleteMany as jest.Mock) = jest.fn();
+jest.mock('../user', () => {
+  const actualUserModule = jest.requireActual('../user');
+  return {
+    ...actualUserModule,
+    find: jest.fn(),
+    deleteMany: jest.fn(),
+  };
+});
 
 describe('deleteUser', () => {
   const email = 'user@example.com';
@@ -30,17 +34,17 @@ describe('deleteUser', () => {
   });
 
   it('deletes a single user with the given email or phone number', async () => {
-    (UserModel.find as jest.Mock).mockResolvedValue([userToDelete]);
-    (UserModel.deleteMany as jest.Mock).mockResolvedValue({ deletedCount: 1 });
+    (User.find as jest.Mock).mockResolvedValue([userToDelete]);
+    (User.deleteMany as jest.Mock).mockResolvedValue({ deletedCount: 1 });
 
     await deleteUser(email, phoneNumber);
 
-    expect(UserModel.find).toHaveBeenCalledWith({
+    expect(User.find).toHaveBeenCalledWith({
       $or: [{ email: email }, { phoneNumber: phoneNumber }],
     });
-    expect(UserModel.deleteMany).toHaveBeenCalledWith({
+    expect(User.deleteMany).toHaveBeenCalledWith({
       $or: [{ email: email }, { phoneNumber: phoneNumber }],
     });
-    expect(UserModel.deleteMany).toHaveBeenCalledTimes(1);
+    expect(User.deleteMany).toHaveBeenCalledTimes(1);
   });
 });
